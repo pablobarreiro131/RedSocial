@@ -1,6 +1,7 @@
 package com.campusdual;
 
 import java.time.LocalDateTime;
+import java.util.TreeSet;
 
 public abstract class Post {
 
@@ -8,10 +9,12 @@ public abstract class Post {
     private int postId;
     private String title;
     protected static int postNumber = 0;
+    private TreeSet<Comment> commentList;
 
     public Post(String title) {
         this.title = title;
         this.postDate = LocalDateTime.now();
+        this.commentList = new TreeSet<>();
         this.postId = postNumber++;
     }
 
@@ -27,5 +30,10 @@ public abstract class Post {
         return postDate;
     }
 
-    public abstract void commentList();
+    public TreeSet<Comment> getCommentList() {
+        return commentList;
+    }
 }
+
+
+

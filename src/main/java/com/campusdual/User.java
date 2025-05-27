@@ -9,11 +9,13 @@ public class User {
     private static int userCount = 0;
     private HashSet<Integer> followedUsers;
     private TreeSet<Post> postList;
+    private TreeSet<Comment> commentList;
 
     public User(String name){
         this.name = name;
         this.followedUsers = new HashSet<>();
         this.postList = new TreeSet<>();
+        this.commentList = new TreeSet<>();
         this.userId = userCount++;
     }
 
@@ -81,4 +83,10 @@ public class User {
             }
         }
     }
+
+    public TreeSet<Comment> getCommentList() {
+        return commentList;
+    }
+
+
 }

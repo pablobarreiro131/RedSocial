@@ -6,6 +6,7 @@ public class SocialNetwork {
 
     private static HashMap<Integer, User> userDatabase = new HashMap<>();
     private static HashMap <Integer, Post> postDatabase = new HashMap<>();
+    private static HashMap <Integer, Comment> commentDatabase = new HashMap<>();
 
     public static void createUser(String name){
         User user = new User(name);
@@ -64,5 +65,16 @@ public class SocialNetwork {
             }
         }
         return true;
+    }
+
+    public static HashMap<Integer, Comment> getCommentDatabase() {
+        return commentDatabase;
+    }
+
+    public static void createComment(String texto, User author, Post post){
+        Comment comment = new Comment(texto, author, post);
+        commentDatabase.put(comment.getCommentId(),comment);
+        author.getCommentList().add(comment);
+        post.getCommentList().add(comment);
     }
 }
