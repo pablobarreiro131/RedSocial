@@ -67,6 +67,49 @@ public class SocialNetwork {
         return true;
     }
 
+    public static void uploadText (String content, String title, User author){
+        Text text = new Text(content, title);
+        author.getPostList().add(text);
+        SocialNetwork.getPostDatabase().put(text.getPostId(),text);
+    }
+    public static void uploadImage (String title, String size, User author){
+        Image image = new Image(title, size);
+        author.getPostList().add(image);
+        SocialNetwork.getPostDatabase().put(image.getPostId(),image);
+    }
+
+    public static void uploadVideo (String title, String quality, int duration, User author){
+        Video video = new Video(title, quality, duration);
+        author.getPostList().add(video);
+        SocialNetwork.getPostDatabase().put(video.getPostId(),video);
+    }
+
+    public static void printList(User user){
+        for (Post post : user.getPostList()) {
+            System.out.print("Post ID: " + post.getPostId() + ", Tipo: " + post.getClass().getSimpleName());
+
+            if (post instanceof Text) {
+                Text text = (Text) post;
+                System.out.println(", Título: " + text.getTitle() + ", Contenido: " + text.getContent());
+            } else if (post instanceof Image) {
+                Image image = (Image) post;
+                System.out.println(", Título: " + image.getTitle() + ", Tamaño: " + image.getSize());
+            } else if (post instanceof Video) {
+                Video video = (Video) post;
+                System.out.println(", Título: " + video.getTitle() + ", Calidad: " + video.getQuality() + ", Duración: " + video.getDuration() + " seg");
+            } else {
+                System.out.println();
+            }
+        }
+    }
+
+    public boolean checkUser(User user, User selected){
+        if (user.equals(selected)){
+            return true;
+        }
+        else return false;
+    }
+
     public static HashMap<Integer, Comment> getCommentDatabase() {
         return commentDatabase;
     }
@@ -76,5 +119,27 @@ public class SocialNetwork {
         commentDatabase.put(comment.getCommentId(),comment);
         author.getCommentList().add(comment);
         post.getCommentList().add(comment);
+    }
+
+    public static boolean deleteComment(int commentId){
+        if (!commentDatabase.containsKey(commentId)){
+            return false;
+        }
+        else{
+            for (User user: userDatabase.values()){
+                user.getCommentList().remove(commentDatabase.get(commentId));
+                for(Post post: user.getPostList()){
+                    post.getCommentList().remove(commentDatabase.get(commentId));
+                }
+            }
+            commentDatabase.remove(commentId);
+            return true;
+        }
+    }
+
+    public static void userCommentList(User user){
+        for (Comment comment: user.getCommentList()){
+            System.out.println("ID del comentario: " + comment.getCommentId() + ", Fecha: " + comment.getCommentDate().toString() + ", Comentario: " + comment.getText());
+        }
     }
 }

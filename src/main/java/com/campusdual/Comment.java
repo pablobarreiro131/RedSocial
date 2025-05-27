@@ -20,6 +20,26 @@ public class Comment {
         this.commentId = commentCount++;
     }
 
+    public String getText() {
+        return text;
+    }
+
+    public LocalDateTime getCommentDate() {
+        return commentDate;
+    }
+
+    public User getAuthor() {
+        return author;
+    }
+
+    public Post getPost() {
+        return post;
+    }
+
+    public static int getCommentCount() {
+        return commentCount;
+    }
+
     public int getCommentId() {
         return commentId;
     }
