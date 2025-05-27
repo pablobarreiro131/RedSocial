@@ -33,6 +33,14 @@ public abstract class Post {
     public TreeSet<Comment> getCommentList() {
         return commentList;
     }
+
+    public int commentNumber(){
+        int i = 0;
+        for (Comment comment: this.getCommentList()){
+            i++;
+        }
+        return i;
+    }
 }
 
 
